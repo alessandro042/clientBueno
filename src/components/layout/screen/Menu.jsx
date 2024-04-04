@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import Imagen from '../assets/logo.png';
-import Usuarios from './gestiones/Usuarios';
 const Menu = () => {
     return(
         
