@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'flowbite-react';
-import Imagen from '../../assets/logo.png';
+import Imagen from '../../../assets/logo.png';
 import './estilos/style.css';
 
 const EliminaUsuario = () => {

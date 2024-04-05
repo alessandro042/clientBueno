@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'flowbite-react';
-import Imagen from '../../assets/logo.png';
+import Imagen from '../../../assets/logo.png';
 import { Chart } from 'react-google-charts';
 import './estilos/style.css';
 

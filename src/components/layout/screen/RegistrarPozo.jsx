@@ -4,6 +4,8 @@ import Select from 'react-select';
 import Imagen from '../../assets/logo.png';
 import * as yup from 'yup';
 
+
+
 const RegistrarPozo = () => {
   const [selectedRoles, setSelectedRoles] = useState([]);
 

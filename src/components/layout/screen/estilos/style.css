@@ -1,0 +1,33 @@
+.correo,
+.nombre,
+.rol,
+.grafica,
+.numero,
+.ubicacion,
+.nombreUsuario,
+.area,
+.acciones {
+  background-color: #072D44;
+  color: white;
+}
+
+/* Estilos para los bordes de la tabla */
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid transparent;
+}
+
+th,
+td {
+  padding: 8px;
+}
+
+/* Estilos para las filas alternas */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
