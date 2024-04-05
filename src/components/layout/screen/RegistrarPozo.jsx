@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Label, TextInput } from 'flowbite-react';
 import Select from 'react-select';
 import Imagen from '../../assets/logo.png';
+import * as yup from 'yup';
 
 const RegistrarPozo = () => {
   const [selectedRoles, setSelectedRoles] = useState([]);
