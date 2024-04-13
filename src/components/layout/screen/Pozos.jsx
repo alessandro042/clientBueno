@@ -3,6 +3,7 @@ import { Button } from 'flowbite-react';
 import Imagen from '../../../assets/logo.png';
 import { Chart } from 'react-google-charts';
 import './estilos/style.css';
+import { Link } from 'react-router-dom';
 
 const Pozos = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -117,7 +118,9 @@ const Pozos = () => {
                 <td className="border border-gray-300 px-4 py-2">{pozo.numero}</td>
                 <td className="border border-gray-300 px-4 py-2">{pozo.ubicacion}</td>
                 <td className="border border-gray-300 px-4 py-1 flex justify-center items-center">
-                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">Consultar</Button>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
+                    <Link to="/consultapozo">Consultar</Link>
+                  </Button>
                   <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">Modificar</Button>
                   <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm' type="submit">Eliminar</Button>
                 </td>

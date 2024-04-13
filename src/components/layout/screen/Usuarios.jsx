@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'flowbite-react';
 import Imagen from '../../../assets/logo.png';
 import './estilos/style.css';
+import { Link } from 'react-router-dom';
 
 const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -100,8 +101,12 @@ const Usuarios = () => {
                 <td className="border border-gray-300 px-4 py-2">{usuario.nombreUsuario}</td>
                 <td className="border border-gray-300 px-4 py-2">{usuario.area}</td>
                 <td className="border border-gray-300 px-4 py-1 flex justify-between items-center">
-                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm' type="submit">Modificar</Button>
-                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm' type="submit">Eliminar</Button>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm' type="submit">
+                    <Link to="/modificacionusuario">Modificar</Link>
+                  </Button>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm' type="submit">
+                    <Link to="/eliminausuario">Eliminar</Link>
+                  </Button>
                 </td>
               </tr>
             ))}
