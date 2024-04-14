@@ -59,7 +59,6 @@ import AuthContext from '../config/context/auth-context';
 import React, { useContext } from 'react';
 import SignInPage from '../modules/auth/SignInPage';
 import AdminLayout from '../components/layout/AdminLayout';
-import UserPage from '../modules/admin/user/UserPage';
 import ConsultaPozo from '../../src/components/layout/screen/ConsultaPozo';
 import EliminaUsuario from '../../src/components/layout/screen/EliminaUsuario';
 import ModificacionUsuario from '../../src/components/layout/screen/ModificacionUsuario';
