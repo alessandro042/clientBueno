@@ -12,32 +12,6 @@ const ConsultaPozos = () => {
 
   return (
     <div>
-      {/* Navbar SIMNA cpr*/}
-      <nav className="bg-blue-900 w-full p-4 flex justify-between items-center" style={{ background: "#072D44" }}>
-        <div className="flex items-center">
-          <img src={Imagen} alt="Logo" className="h-12 w-auto mr-4" /> 
-          <h1 className="text-white font-bold text-lg">SIMNA</h1>
-        </div>
-        
-        <div className="flex items-center">
-          <button className="text-white focus:outline-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
-        </div>
-      </nav>
       
       <h2 className="text-center text-2xl font-bold mt-4">Pozo: 1</h2>
 
