@@ -68,6 +68,7 @@ import RegistarUsuario from '../../src/components/layout/screen/RegistarUsuario'
 import RegistrarPozo from '../../src/components/layout/screen/RegistrarPozo';
 import Menu from '../../src/components/layout/screen/Menu';
 import Usuarios from '../../src/components/layout/screen/Usuarios';
+import Histograma from '../components/layout/screen/Histograma';
 
 const AppRouter = () => {
     const { user } = useContext(AuthContext);
@@ -83,6 +84,7 @@ const AppRouter = () => {
             <Route path='/registrarusuario' element={<RegistarUsuario />} />
             <Route path='/registrarpozo' element={<RegistrarPozo />} />
             <Route path='/usuarios' element={<Usuarios />} />
+            <Route path='/histograma' element={<Histograma />} />
         </Route>
     ) : (
         <Route path="/" element={<SignInPage />} />
