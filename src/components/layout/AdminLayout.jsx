@@ -40,6 +40,12 @@ const AdminLayout = () => {
                   <Link to='/pozos'>Gestionar Pozos</Link>
                 </button>
                 <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
+                  <Link to='/registrarusuario'>Registrar Usuarios</Link>
+                </button>
+                <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
+                  <Link to='/registrarpozo'>Registrar Pozos</Link>
+                </button>
+                <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
                   Cerrar Sesión
                 </button>
               </div>
