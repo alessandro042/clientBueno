@@ -74,8 +74,12 @@ const Pozos = () => {
                   <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
                     <Link to="/consultapozo">Consultar</Link>
                   </Button>
-                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">Modificar</Button>
-                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm' type="submit">Eliminar</Button>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
+                    <Link to="/modificapozo">Modificar</Link>
+                  </Button>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm' type="submit">
+                    <Link to="/eliminapozo">Eliminar</Link>
+                  </Button>
                 </td>
               </tr>
             ))}

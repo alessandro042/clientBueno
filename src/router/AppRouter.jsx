@@ -68,6 +68,8 @@ import RegistrarPozo from '../../src/components/layout/screen/RegistrarPozo';
 import Menu from '../../src/components/layout/screen/Menu';
 import Usuarios from '../../src/components/layout/screen/Usuarios';
 import Histograma from '../components/layout/screen/Histograma';
+import EliminaPozo from '../components/layout/screen/EliminaPozo';
+import ModificaPozo from '../components/layout/screen/ModificaPozo';
 
 const AppRouter = () => {
     const { user } = useContext(AuthContext);
@@ -84,6 +86,8 @@ const AppRouter = () => {
             <Route path='/registrarpozo' element={<RegistrarPozo />} />
             <Route path='/usuarios' element={<Usuarios />} />
             <Route path='/histograma' element={<Histograma />} />
+            <Route path='/eliminapozo' element={<EliminaPozo />} />
+            <Route path='/modificapozo' element={<ModificaPozo />} />
         </Route>
     ) : (
         <Route path="/" element={<SignInPage />} />
