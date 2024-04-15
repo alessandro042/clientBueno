@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'flowbite-react';
 import Imagen from '../../../assets/logo.png';
 import './estilos/style.css';
+import { Link } from 'react-router-dom';
 
 const EliminaPozo = () => {
     const usuarios = [
@@ -58,7 +59,9 @@ const EliminaPozo = () => {
                     </tbody>
                 </table>
                 <div className="flex justify-center mt-4">
-                    <Button className="bg-blue-600 text-white px-4 py-2" style={{ backgroundColor: '#5790AB' }}>Eliminar Usuario</Button>
+                    <Button className="bg-blue-600 text-white px-4 py-2" style={{ backgroundColor: '#5790AB' }}>
+                        <Link to="/pozos">Eliminar</Link>
+                    </Button>
                 </div>
             </div>
         </div>

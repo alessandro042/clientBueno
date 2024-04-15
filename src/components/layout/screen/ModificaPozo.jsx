@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import Imagen from "../../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const ModificaPozo = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -220,7 +221,7 @@ const ModificaPozo = () => {
                     className="shadow btn-sm"
                     onClick={handleSaveChanges}
                 >
-                    Guardar Cambios
+                    <Link to="/pozos">Guardar Cambios</Link>
                 </Button>
             </div>
         </div>
