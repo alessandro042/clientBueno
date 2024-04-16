@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Label, TextInput } from "flowbite-react";
 import Select from "react-select";
+import bcrypt from "bcryptjs";
 import Imagen from "../../../assets/logo.png";
 
 const RegistrarUsuario = () => {
@@ -29,7 +30,7 @@ const RegistrarUsuario = () => {
       rol_id = 1;
     } else if (rol === "USER_ROLE") {
       rol_id = 2;
-    } else if (rol== "CLIENT_ROLE") {
+    } else if (rol == "CLIENT_ROLE") {
       rol_id = 3;
     } else {
       // Manejar caso de rol no válido
@@ -37,17 +38,21 @@ const RegistrarUsuario = () => {
       return;
     }
 
-    console.log(
-      name,
-      surname,
-      lastname,
-      birthdate,
-      curp,
-      username,
-      password,
-      rol,
-      rol_id
-    );
+    // Asignar el valor correcto a rol_id según el rol seleccionado
+    if (rol === "ADMIN_ROLE") {
+      rol_id = 1;
+    } else if (rol === "USER_ROLE") {
+      rol_id = 2;
+    } else if (rol === "CLIENT_ROLE") {
+      rol_id = 3;
+    } else {
+      // Manejar caso de rol no válido
+      setError("Rol no válido");
+      return;
+    }
+
+    // Encriptar la contraseña antes de enviarla al backend
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const response = await fetch("http://localhost:8080/api/person/", {
       method: "POST",
@@ -63,7 +68,7 @@ const RegistrarUsuario = () => {
         curp,
         user: {
           username,
-          password,
+          password: hashedPassword, // Enviar la contraseña encriptada
           roles: [
             {
               id: rol_id, // Incluir rol_id en el cuerpo de la solicitud
@@ -71,7 +76,6 @@ const RegistrarUsuario = () => {
             },
           ],
         },
-        
       }),
     });
     if (response.status === 200) {

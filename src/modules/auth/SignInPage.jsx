@@ -17,7 +17,6 @@ import Imagen from "../../assets/logo.png";
 
 const SignInPage = () => {
   //Formik nos ayuda a controlar los formularios
-
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -31,12 +30,15 @@ const SignInPage = () => {
       password: yup.string().required("Campo obligatorio"),
     }),
     onSubmit: async (values, { setSubmitting }) => {
+      console.log("values", values);
       try {
+        console.log("Cargando...");
         const response = await AxiosClient({
           url: "/auth/signin",
           method: "POST",
           data: values,
         });
+        console.log("response", response);
         if (!response.error) {
           /**
            * Tenemos que validar que rol tiene -> Redireccionarlo a su página principal
@@ -46,6 +48,7 @@ const SignInPage = () => {
           navigate("/", { replace: true });
         } else throw Error("Error");
       } catch (error) {
+        console.error(error);
         customAlert(
           "Iniciar sesión",
           "Usuario y/o contraseña incorrectos",

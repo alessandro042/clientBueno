@@ -85,7 +85,7 @@ const AppRouter = () => {
     <Route element={<AdminLayout />}>
       <Route path="/" element={<Menu />} />
       <Route path="/consultapozo" element={<ConsultaPozo />} />
-      <Route path="/eliminausuario" element={<EliminaUsuario />} />
+      <Route path="/eliminausuario/:id" element={<EliminaUsuario />} />
       <Route path="/modificacionusuario/:id" element={<ModificacionUsuario />} />
       <Route path="/pozos" element={<Pozos />} />
       <Route path="/registrarusuario" element={<RegistarUsuario />} />
