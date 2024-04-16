@@ -8,17 +8,70 @@ import * as yup from 'yup';
 
 
 const RegistrarPozo = () => {
-  const [selectedRoles, setSelectedRoles] = useState([]);
 
-  const options = [
-    { value: 'temixco', label: 'Temixco' },
-    { value: 'acatlipa', label: 'Acatlipa' },
-    { value: 'ezapata', label: 'Emiliano Zapata' }
-  ];
+  const [error, setError] = useState(null);
+  const [selectedEstatus, setSelectedEstatus] = useState([]);
+
+  //Asignar el valor de boleano a los valores "true" y "false"
+  if (selectedEstatus.value === "true") {
+    selectedEstatus.value = true;
+  } else if (selectedEstatus.value === "false") {
+    selectedEstatus.value = false;
+  }
+
 
   const handleRoleChange = (selectedOptions) => {
-    setSelectedRoles(selectedOptions);
+    console.log(selectedOptions)
+    setSelectedEstatus(selectedOptions);
   };
+
+  const getToken = () => {
+    return localStorage.getItem("token");
+    console.log(localStorage.getItem("token"));
+  };
+
+  const postPozo = async (e) => {
+    e.preventDefault();
+    const token = getToken();
+    const nombre = document.getElementById("nombre").value;
+
+    const profundidad = document.getElementById("profundidad").value;
+    const capacidadLitros = document.getElementById("capacidadLitros").value;
+    const porcentajeAgua = document.getElementById("porcentajeAgua").value;
+    const ubicacionPozo = document.getElementById("ubicacionPozo").value;
+    const comunidades = document.getElementById("comunidades").value;
+    const estatus = document.getElementById("estatus").value;
+
+    console.log("usuario:", nombre, profundidad, capacidadLitros, porcentajeAgua, ubicacionPozo, comunidades, estatus);
+
+    const response = await fetch("http://localhost:8080/api/pozos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        nombre,
+        profundidad,
+        capacidadLitros,
+        porcentajeAgua,
+        ubicacionPozo,
+        comunidades,
+        estatus
+
+      }),
+    });
+    if (response.status === 200) {
+      setError(null);
+      alert("Pozo registrado exitosamente");
+    } else {
+      setError("Error al registrar Pozo");
+    }
+  }
+
+
+
+
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
@@ -27,44 +80,60 @@ const RegistrarPozo = () => {
           <div className="font text-3xl font-bold mb-6">
             <span style={{ color: "#ffffff" }}>Registrar Nuevo Pozo</span>
           </div>
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={postPozo}>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="nombrePozo" value="Ubicación" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+                <Label htmlFor="nombrePozo" value="Nombre" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
               </div>
-              <TextInput id="nombrePozo" type="text" required />
+              <TextInput id="nombre" type="text" required />
             </div>
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="nivel" value="Nivel" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+                <Label htmlFor="profundidad" value="Profundidad" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
               </div>
-              <TextInput id="nivel" type="text" required />
+              <TextInput id="profundidad" type="text" required />
             </div>
 
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="profundidadPozo" value="Capacidad" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
               </div>
-              <TextInput id="profundidadPozo" type="text" required />
+              <TextInput id="capacidadLitros" type="text" required />
             </div>
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="municipio" value="Municipio" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+                <Label htmlFor="Porcentaje" value="Porcentaje" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
               </div>
-              <TextInput id="municipio" type="text" required />
+              <TextInput id="porcentajeAgua" type="text" required />
             </div>
 
             <div>
-              <Label htmlFor="roles" value="Seleccionar Comunidades abastecidas" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
-              <Select
-                id="roles"
-                options={options}
-                isMulti
-                value={selectedRoles}
-                onChange={handleRoleChange}
-              />
+              <div className="mb-2 block">
+                <Label htmlFor="Ubicacion" value="Ubicacion" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+              </div>
+              <TextInput id="ubicacionPozo" type="text" required />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="comunidades" value="Comunidades" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+              </div>
+              <TextInput id="comunidades" type="text" required />
+            </div>
+
+
+            <div>
+              <select
+                id="estatus"
+                className='w-full bg-white border border-gray-300 rounded-md px-4 py-2'
+              >
+                <option value="" disabled>
+                  Selecciona un estatus
+                </option>
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+              </select>
             </div>
 
             <Button style={{ background: "#072D44" }} className='mt-8 shadow-lg text-3xl' type="submit">Registrar Pozo</Button>
