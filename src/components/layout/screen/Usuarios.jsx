@@ -8,6 +8,7 @@ const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [usuarios, setUsuarios] = useState([]);
 
+  //Obtenemos token:
   const getToken = () => {
     console.log(localStorage.getItem("token"));
     return localStorage.getItem("token");
@@ -56,7 +57,7 @@ const Usuarios = () => {
           <thead>
             <tr>
               <th className="nombreUsuario">Nombre de Usuario</th>
-              <th className="area">Rol:</th>
+              <th className="area">Rol</th>
               <th className="acciones">Acciones</th>
             </tr>
           </thead>
@@ -86,12 +87,27 @@ const Usuarios = () => {
                       {usuario.user.roles[0].name}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      <Link
-                        to={`/modificacion-usuario/${usuario.id}`}
-                        className="text-blue-500"
-                      >
-                        Editar
-                      </Link>
+                      <td className="px-4 py-1 flex justify-between items-center">
+                        <Link to={`/modificacionusuario/${usuario.id}`}>
+                          <Button
+                            style={{ background: "#5790AB" }}
+                            className="shadow btn-sm"
+                            type="submit"
+                            onClick={() => {
+                              localStorage.setItem("id", usuario.id);
+                            }}
+                          >
+                            Modificar
+                          </Button>
+                        </Link>
+                        <Button
+                          style={{ background: "#5790AB" }}
+                          className="shadow btn-sm"
+                          type="submit"
+                        >
+                          <Link to="/eliminausuario">Eliminar</Link>
+                        </Button>
+                      </td>
                     </td>
                   </tr>
                 ))
