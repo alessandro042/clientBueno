@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 
 const ModificaUsuario = () => {
   const [usuario, setUsuario] = useState(null);
+  const [roles, setRoles] = useState([]);
   const [nuevoNombre, setNuevoNombre] = useState("");
-  const [nuevoApellido, setNuevoApellido] = useState("");
+  const [nuevoApellidoM, setNuevoApellidoM] = useState("");
+  const [nuevoApellidoP, setNuevoApellidoP] = useState("");
   const [nuevoRol, setNuevoRol] = useState("");
 
   // Obtenemos token y ID de usuario
@@ -30,6 +32,21 @@ const ModificaUsuario = () => {
     setUsuario(data.data);
   };
 
+  const getRoles = async () => {
+    const token = getToken();
+    const id = getIdUsuario();
+    const response = await fetch(`http://localhost:8080/api/person/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.user.roles[0].name);
+    setRoles(data.data.user.roles[0].name);
+  };
+
   // Función para modificar el nombre
   const cambiarNombre = async () => {
     console.log("Cambiando nombre id: ", getIdUsuario());
@@ -44,7 +61,7 @@ const ModificaUsuario = () => {
       body: JSON.stringify({
         name: nuevoNombre,
         birthdate: usuario.birthdate, // Incluir la fecha de nacimiento actual
-        curp : usuario.curp,
+        curp: usuario.curp,
         surname: usuario.surname,
       }),
     });
@@ -58,7 +75,7 @@ const ModificaUsuario = () => {
   };
 
   // Función para modificar el apellido
-  const cambiarApellido = async () => {
+  const cambiarApellidoM = async () => {
     const token = getToken();
     const id = getIdUsuario();
     const response = await fetch(`http://localhost:8080/api/person/${id}`, {
@@ -68,8 +85,11 @@ const ModificaUsuario = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        apellido: nuevoApellido,
-        birth_date: usuario.birthdate, // Incluir la fecha de nacimiento actual
+        surname: nuevoApellidoM,
+        birthdate: usuario.birthdate, // Incluir la fecha de nacimiento actual
+        curp: usuario.curp,
+        name: usuario.name,
+        lastname: usuario.lastname,
       }),
     });
     const data = await response.json();
@@ -77,9 +97,36 @@ const ModificaUsuario = () => {
     // Actualizar el estado del usuario con el nuevo apellido
     setUsuario((prevUsuario) => ({
       ...prevUsuario,
-      surname: nuevoApellido,
+      surname: nuevoApellidoM,
     }));
-    setNuevoApellido(""); // Limpiar el campo de nuevo apellido después de la actualización
+    setNuevoApellidoM(""); // Limpiar el campo de nuevo apellido después de la actualización
+  };
+
+  const cambiarApellidoP = async () => {
+    const token = getToken();
+    const id = getIdUsuario();
+    const response = await fetch(`http://localhost:8080/api/person/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        lastname: nuevoApellidoP,
+        birthdate: usuario.birthdate, // Incluir la fecha de nacimiento actual
+        curp: usuario.curp,
+        name: usuario.name,
+        surname: usuario.surname,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    // Actualizar el estado del usuario con el nuevo apellido
+    setUsuario((prevUsuario) => ({
+      ...prevUsuario,
+      lastname: nuevoApellidoP,
+    }));
+    setNuevoApellidoP(""); // Limpiar el campo de nuevo apellido después de la actualización
   };
 
   // Función para modificar el rol
@@ -92,7 +139,13 @@ const ModificaUsuario = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ rol: nuevoRol }),
+      body: JSON.stringify({
+        birthdate: usuario.birthdate, // Incluir la fecha de nacimiento actual
+        curp: usuario.curp,
+        name: usuario.name,
+        surname: usuario.surname,
+        roles: nuevoRol,
+      }),
     });
     const data = await response.json();
     console.log(data);
@@ -109,6 +162,7 @@ const ModificaUsuario = () => {
 
   useEffect(() => {
     getUsuario();
+    getRoles();
   }, []);
 
   if (!usuario) {
@@ -122,73 +176,154 @@ const ModificaUsuario = () => {
           <thead>
             <tr>
               <th className="nombre">Nombre(s)</th>
-              <th className="apellido">Apellido(s)</th>
+              <th className="apellido">Apellido Paterno:</th>
+              <th className="apellidoM">Apellido Materno:</th>
               <th className="rol">Rol</th>
             </tr>
           </thead>
           <tbody>
             <tr key={usuario.id}>
               <td>{usuario.name}</td>
+              <td>{usuario.lastname}</td>
               <td>{usuario.surname}</td>
               <td>{usuario.user.roles[0].name}</td>
             </tr>
           </tbody>
         </table>
+
         <div className="flex justify-center mt-4">
-          <div>
+          <div className="flex items-center mr-4">
             <input
               type="text"
               placeholder="Nuevo nombre"
               value={nuevoNombre}
               onChange={(e) => setNuevoNombre(e.target.value)}
+              className="mr-1"
             />
-            <Button
-              className="bg-blue-600 text-white px-4 py-2 ml-2"
-              style={{ backgroundColor: "#5790AB" }}
-              onClick={cambiarNombre}
+          </div>
+          <div className="flex items-center mr-4">
+            <input
+              type="text"
+              placeholder="Nuevo apellido P"
+              value={nuevoApellidoP}
+              onChange={(e) => setNuevoApellidoP(e.target.value)}
+              className="mr-2"
+            />
+          </div>
+          <div className="flex items-center mr-4">
+            <input
+              type="text"
+              placeholder="Nuevo apellido M"
+              value={nuevoApellidoM}
+              onChange={(e) => setNuevoApellidoM(e.target.value)}
+              className="mr-2"
+            />
+          </div>
+          <div className="flex items-center">
+            <select
+              value={nuevoRol}
+              onChange={(e) => setNuevoRol(e.target.value)}
+              className="mr-2"
             >
+              <option value="">Selecciona un rol</option>
+              <option value="ADMIN_ROLE">Admin</option>
+              <option value="USER_ROLE">User</option>
+              <option value="CLIENT_ROLE">Supervisor</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <div className="flex items-center mr-4">
+            <Button color="blue" size="sm" onClick={cambiarNombre}>
               Cambiar Nombre
             </Button>
           </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Nuevo apellido"
-              value={nuevoApellido}
-              onChange={(e) => setNuevoApellido(e.target.value)}
-            />
-            <Button
-              className="bg-blue-600 text-white px-4 py-2 ml-2"
-              style={{ backgroundColor: "#5790AB" }}
-              onClick={cambiarApellido}
-            >
-              Cambiar Apellido
+          <div className="flex items-center mr-4">
+            <Button color="blue" size="sm" onClick={cambiarApellidoP}>
+              Cambiar Apellido Paterno
             </Button>
           </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Nuevo rol"
-              value={nuevoRol}
-              onChange={(e) => setNuevoRol(e.target.value)}
-            />
-            <Button
-              className="bg-blue-600 text-white px-4 py-2 ml-2"
-              style={{ backgroundColor: "#5790AB" }}
-              onClick={cambiarRol}
-            >
+          <div className="flex items-center mr-4">
+            <Button color="blue" size="sm" onClick={cambiarApellidoM}>
+              Cambiar Apellido Materno
+            </Button>
+          </div>
+          <div className="flex items-center">
+            <Button color="blue" size="sm" onClick={cambiarRol}>
               Cambiar Rol
             </Button>
           </div>
-          <Button
-            className="bg-blue-600 text-white px-4 py-2 ml-2"
-            style={{ backgroundColor: "#5790AB" }}
-          >
-            <Link to="/usuarios">Modificar datos</Link>
-          </Button>
         </div>
       </div>
     </div>
+
+    /*
+    <div className="flex justify-center mt-4">
+  <div className="flex items-center mr-4">
+    <input
+      type="text"
+      placeholder="Nuevo nombre"
+      value={nuevoNombre}
+      onChange={(e) => setNuevoNombre(e.target.value)}
+      className="mr-1"
+    />
+  </div>
+  <div className="flex items-center mr-4">
+    <input
+      type="text"
+      placeholder="Nuevo apellido"
+      value={nuevoApellidoP}
+      onChange={(e) => setNuevoApellidoP(e.target.value)}
+      className="mr-2"
+    />
+  </div>
+  <div className="flex items-center mr-4">
+    <input
+      type="text"
+      placeholder="Nuevo apellido"
+      value={nuevoApellidoM}
+      onChange={(e) => setNuevoApellidoM(e.target.value)}
+      className="mr-2"
+    />
+  </div>
+  <div className="flex items-center">
+    <select
+      value={nuevoRol}
+      onChange={(e) => setNuevoRol(e.target.value)}
+      className="mr-2"
+    >
+      <option value="">Selecciona un rol</option>
+      <option value="ADMIN_ROLE">Admin</option>
+      <option value="USER_ROLE">User</option>
+      <option value="CLIENT_ROLE">Supervisor</option>
+    </select>
+  </div>
+</div>
+
+<div className="flex justify-center mt-4">
+  <div className="flex items-center mr-4">
+    <Button color="blue" size="sm" onClick={cambiarNombre}>
+      Cambiar Nombre
+    </Button>
+  </div>
+  <div className="flex items-center mr-4">
+    <Button color="blue" size="sm" onClick={cambiarApellidoP}>
+      Cambiar Apellido Paterno
+    </Button>
+  </div>
+  <div className="flex items-center mr-4">
+    <Button color="blue" size="sm" onClick={cambiarApellidoM}>
+      Cambiar Apellido Materno
+    </Button>
+  </div>
+  <div className="flex items-center">
+    <Button color="blue" size="sm" onClick={cambiarRol}>
+      Cambiar Rol
+    </Button>
+  </div>
+</div>
+*/
   );
 };
 

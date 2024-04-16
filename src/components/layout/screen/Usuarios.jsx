@@ -81,7 +81,7 @@ const Usuarios = () => {
                     className={index % 2 === 0 ? "bg-gray-100" : ""}
                   >
                     <td className="border border-gray-300 px-4 py-2">
-                      {usuario.name} {usuario.surname}
+                      {usuario.name} {usuario.surname} {usuario.lastname}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       {usuario.user.roles[0].name}
