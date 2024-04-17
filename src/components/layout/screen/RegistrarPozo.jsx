@@ -34,7 +34,6 @@ const RegistrarPozo = () => {
     e.preventDefault();
     const token = getToken();
     const nombre = document.getElementById("nombre").value;
-
     const profundidad = document.getElementById("profundidad").value;
     const capacidadLitros = document.getElementById("capacidadLitros").value;
     const porcentajeAgua = document.getElementById("porcentajeAgua").value;

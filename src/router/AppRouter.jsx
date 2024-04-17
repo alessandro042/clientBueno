@@ -92,8 +92,8 @@ const AppRouter = () => {
       <Route path="/registrarpozo" element={<RegistrarPozo />} />
       <Route path="/usuarios" element={<Usuarios />} />
       <Route path="/histograma" element={<Histograma />} />
-      <Route path="/eliminapozo" element={<EliminaPozo />} />
-      <Route path="/modificapozo" element={<ModificaPozo />} />
+      <Route path="/eliminapozo/:id" element={<EliminaPozo />} />
+      <Route path="/modificapozo/:id" element={<ModificaPozo />} />
     </Route>
   ) : (
     <Route path="/" element={<SignInPage />} />
