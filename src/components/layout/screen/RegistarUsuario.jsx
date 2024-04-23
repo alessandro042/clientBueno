@@ -6,9 +6,55 @@ import Imagen from "../../../assets/logo.png";
 
 const RegistrarUsuario = () => {
   const [error, setError] = useState(null); // Nuevo estado para manejar errores
+  const [adminId, setAdminId] = useState([]); // Nuevo estado para almacenar los roles disponibles
+  const [clientId, setClientId] = useState([]); // Nuevo estado para almacenar los roles disponibles
+  const [userId, setUserId] = useState([]); // Nuevo estado para almacenar los roles disponibles
 
   const getToken = () => {
     return localStorage.getItem("token");
+  };
+
+  // Obtener los roles disponibles
+  const getIdRolAdmin = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/ADMIN_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setAdminId(data.data.id);
+  };
+
+  const getIdRolClient = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/CLIENT_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setClientId(data.data.id);
+  };
+
+  const getIdRolUser = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/USER_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setUserId(data.data.id);
   };
 
   // Post usuario
@@ -27,24 +73,14 @@ const RegistrarUsuario = () => {
 
     // Asignar el valor correcto a rol_id según el rol seleccionado
     if (rol === "ADMIN_ROLE") {
-      rol_id = 1;
+      rol_id = adminId;
+      console.log(rol_id);
     } else if (rol === "USER_ROLE") {
-      rol_id = 2;
+      rol_id = userId;
+      console.log(rol_id);
     } else if (rol == "CLIENT_ROLE") {
-      rol_id = 3;
-    } else {
-      // Manejar caso de rol no válido
-      setError("Rol no válido");
-      return;
-    }
-
-    // Asignar el valor correcto a rol_id según el rol seleccionado
-    if (rol === "ADMIN_ROLE") {
-      rol_id = 1;
-    } else if (rol === "USER_ROLE") {
-      rol_id = 2;
-    } else if (rol === "CLIENT_ROLE") {
-      rol_id = 3;
+      rol_id = clientId;
+      console.log(rol_id);
     } else {
       // Manejar caso de rol no válido
       setError("Rol no válido");
@@ -71,7 +107,7 @@ const RegistrarUsuario = () => {
           password: hashedPassword, // Enviar la contraseña encriptada
           roles: [
             {
-              id: rol_id, // Incluir rol_id en el cuerpo de la solicitud
+              id: rol_id,
               name: rol,
             },
           ],
@@ -85,6 +121,12 @@ const RegistrarUsuario = () => {
       setError("Error al registrar usuario");
     }
   };
+
+  useEffect(() => {
+    getIdRolAdmin();
+    getIdRolClient();
+    getIdRolUser();
+  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
