@@ -64,7 +64,10 @@ const Pozos = () => {
                 <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
                   <Link to={`/consultapozo/${pozo.id}`}>Consultar</Link>
                 </Button>
-                <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
+                <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit"
+                onClick={() => {
+                  localStorage.setItem("id", pozo.id);
+                }}>
                   <Link to={`/modificapozo/${pozo.id}`}>Modificar</Link>
                 </Button>
                 <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm' type="submit">
