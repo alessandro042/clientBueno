@@ -8,6 +8,7 @@ const Menu = () => {
     localStorage.removeItem("user");
     window.location.href = "/";
   };
+
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div
@@ -15,35 +16,37 @@ const Menu = () => {
         className="w-full flex justify-center items-center bg-blue-900"
       >
         <Card
-          className="max-w-md border-none shadow-lg"
-          style={{ background: "#064469" }}
+          className="max-w-md border-none shadow-lg rounded-lg text-center transition-transform duration-300 transform hover:scale-105"
+          style={{ background: "#064469", padding: "40px", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}
         >
-          <div className="font text-3xl font-bold mb-6">
-            <span style={{ color: "#ffffff" }}>Bienvenido Administrador</span>
+          <div className="font text-3xl font-bold mb-6 text-white">
+            Bienvenido Administrador
           </div>
-          <Link to="/usuarios">
+          <div className="flex flex-col gap-7 items-center">
+            <Link to="/usuarios">
+              <Button
+                style={{ background: "#072D44", width: "100%", minWidth: "250px"}}
+                className="shadow-lg text-xl transition-transform duration-300 transform hover:scale-105"
+              >
+                Gestionar Usuarios
+              </Button>
+            </Link>
+            <Link to="/pozos">
+              <Button
+                style={{ background: "#072D44", width: "100%", minWidth: "250px" }}
+                className="shadow-lg text-xl transition-transform duration-300 transform hover:scale-105"
+              >
+                Gestionar Pozos
+              </Button>
+            </Link>
             <Button
-              style={{ background: "#072D44" }}
-              className="mt-8 shadow-lg text-3xl"
+              style={{ background: "#072D44", width: "100%", minWidth: "250px" }}
+              className="shadow-lg text-xl transition-transform duration-300 transform hover:scale-105"
+              onClick={cerrarSesion}
             >
-              Gestionar Usuarios
+              Salir
             </Button>
-          </Link>
-          <Link to="/pozos">
-            <Button
-              style={{ background: "#072D44" }}
-              className="mt-8 shadow-lg text-3xl"
-            >
-              Gestionar Pozos
-            </Button>
-          </Link>
-          <Button
-            style={{ background: "#072D44" }}
-            className="mt-8 shadow-lg text-3xl"
-            onClick={cerrarSesion}
-          >
-            Salir
-          </Button>
+          </div>
         </Card>
       </div>
     </div>

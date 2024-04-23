@@ -13,7 +13,6 @@ const ModificaPozo = () => {
 
     const [pozo, setPozo] = useState(null);
     const [nuevoNombre, setNuevoNombre] = useState("");
-    const [nuevoProfundidad, setNuevoProfundidad] = useState("");
     const [nuevoCapacidadLitros, setNuevoCapacidadLitros] = useState("");
     const [nuevoPorcentajeAgua, setNuevoPorcentajeAgua] = useState("");
     const [nuevaUbicacionPozo, setNuevaUbicacionPozo] = useState("");
@@ -57,7 +56,6 @@ const ModificaPozo = () => {
                     nombre: nuevoNombre,
                     capacidadLitros: pozo.capacidadLitros,
                     comunidades: pozo.comunidades,
-                    profundidad: pozo.profundidad,
                     ubicacionPozo: pozo.ubicacionPozo,
                 }),
             });
@@ -73,34 +71,6 @@ const ModificaPozo = () => {
         };
     };
 
-    //funcion para cambiar la profundidad del pozo
-    const updateProfundidad = async () => {
-        console.log("put del pozo", getIdPozo());
-        const token = getToken();
-        const id = getIdPozo();
-        const response = await fetch(`http://localhost:8080/api/pozos/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                profundidad: nuevoProfundidad,
-                capacidadLitros: pozo.capacidadLitros,
-                comunidades: pozo.comunidades,
-                profundidad: pozo.profundidad,
-                ubicacionPozo: pozo.ubicacionPozo,
-                nombre: pozo.nombre,
-            }),
-        });
-        const data = await response.json();
-        console.log("Respuesta: ", data);
-        setPozo((prevPozo) => ({
-            ...prevPozo,
-            profundidad: nuevoProfundidad,
-        }));
-        setNuevoProfundidad(""); // Limpiar el campo de nuevo nombre después de la actualización
-    };
 
     //funcion para cambiar la capacidad de litros del pozo
     const updateCapacidadLitros = async () => {
@@ -115,7 +85,6 @@ const ModificaPozo = () => {
             },
             body: JSON.stringify({
                 capacidadLitros: nuevoCapacidadLitros,
-                profundidad: pozo.profundidad,
                 porcentajeAgua: pozo.porcentajeAgua,
                 ubicacionPozo: pozo.ubicacionPozo,
                 comunidades: pozo.comunidades,
@@ -145,7 +114,6 @@ const ModificaPozo = () => {
             },
             body: JSON.stringify({
                 porcentajeAgua: nuevoPorcentajeAgua,
-                profundidad: pozo.profundidad,
                 capacidadLitros: pozo.capacidadLitros,
                 ubicacionPozo: pozo.ubicacionPozo,
                 comunidades: pozo.comunidades,
@@ -177,7 +145,6 @@ const ModificaPozo = () => {
             },
             body: JSON.stringify({
                 ubicacionPozo: nuevaUbicacionPozo,
-                profundidad: pozo.profundidad,
                 capacidadLitros: pozo.capacidadLitros,
                 porcentajeAgua: pozo.porcentajeAgua,
                 comunidades: pozo.comunidades,
@@ -207,7 +174,6 @@ const ModificaPozo = () => {
             },
             body: JSON.stringify({
                 comunidades: nuevaComunidades,
-                profundidad: pozo.profundidad,
                 capacidadLitros: pozo.capacidadLitros,
                 porcentajeAgua: pozo.porcentajeAgua,
                 ubicacionPozo: pozo.ubicacionPozo,
@@ -238,7 +204,6 @@ const ModificaPozo = () => {
             },
             body: JSON.stringify({
                 estatus: nuevoEstatus,
-                profundidad: pozo.profundidad,
                 capacidadLitros: pozo.capacidadLitros,
                 porcentajeAgua: pozo.porcentajeAgua,
                 ubicacionPozo: pozo.ubicacionPozo,
@@ -260,146 +225,113 @@ const ModificaPozo = () => {
         getPozo();
     }, []);
 
+
     return (
-        <div>
-            <div className="p-4 mx-auto mt-8 max-w-4xl">
-                <table className="w-full border-collapse border border-gray-300 bg-white">
-                    <thead>
-                        <tr>
-                            <th className="nombre">Nombre Pozo</th>
-                            <th className="capacidadLitros">Capacidad</th>
-                            <th className="profundidad">Profundidad</th>
-                            <th className="porcentajeAgua">Porcentaje Agua</th>
-                            <th className="ubicacionPozo">Ubicacion</th>
-                            <th className="comunidades">Comunidades</th>
-                            <th className="estatus">Estatus</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pozo && (
-                            <tr key={pozo.id}>
-                                <td>{pozo && pozo.nombre}</td>
-                                <td>{pozo && pozo.capacidadLitros}</td>
-                                <td>{pozo && pozo.profundidad}</td>
-                                <td>{pozo && pozo.porcentajeAgua}</td>
-                                <td>{pozo && pozo.ubicacionPozo}</td>
-                                <td>{pozo && pozo.comunidades}</td>
-                                <td>{pozo && pozo.estatus}</td>
-                            </tr>
-                        )}
-
-                    </tbody>
-                </table>
-
-                <div className="flex justify-center mt-4">
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="text"
-                            placeholder="Nuevo nombre"
-                            value={nuevoNombre}
-                            onChange={(e) => setNuevoNombre(e.target.value)}
-                            className="mr-1"
-                        />
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="number"
-                            placeholder="Nueva Capacidad Litros"
-                            value={nuevoCapacidadLitros}
-                            onChange={(e) => setNuevoCapacidadLitros(e.target.value)}
-                            className="mr-2"
-                        />
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="number"
-                            placeholder="Nueva Profundidad"
-                            value={nuevoProfundidad}
-                            onChange={(e) => setNuevoProfundidad(e.target.value)}
-                            className="mr-2"
-                        />
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="number"
-                            placeholder="Nuevo Porcentaje Agua"
-                            value={nuevoPorcentajeAgua}
-                            onChange={(e) => setNuevoPorcentajeAgua(e.target.value)}
-                            className="mr-2"
-                        />
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="text"
-                            placeholder="Nueva Ubicacion"
-                            value={nuevaUbicacionPozo}
-                            onChange={(e) => setNuevaUbicacionPozo(e.target.value)}
-                            className="mr-2"
-                        />
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <input
-                            type="text"
-                            placeholder="Nueva Comunidad"
-                            value={nuevaComunidades}
-                            onChange={(e) => setNuevaComunidades(e.target.value)}
-                            className="mr-2"
-                        />
-                    </div>
-                    <div className="flex items-center">
-                        <select
-                            value={nuevoEstatus}
-                            onChange={(e) => setNuevoEstatus(e.target.value)}
-                            className="mr-2"
-                        >
-                            <option value="">Selecciona un estatus</option>
-                            <option value="true">Activo</option>
-                            <option value="false">Inactivo</option>
-                        </select>
-                    </div>
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+          <div className="p-6 bg-white rounded-lg shadow-xl">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-lg overflow-hidden bg-white border border-gray-300 shadow-md">
+                <div className="p-4 border-b border-gray-300">
+                  {/* Título estilizado "Información del Pozo" */}
+                  <h3 className="text-lg font-bold" style={{ color: '#06427C' }}>Información del Pozo</h3>
                 </div>
-
-                <div className="flex justify-center mt-4">
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updateNombre}>
-                            Cambiar Nombre
-                        </Button>
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updateCapacidadLitros}>
-                            Cambiar Capacidad Litros
-                        </Button>
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updateProfundidad}>
-                            Cambiar profundidad
-                        </Button>
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updatePorcentajeAgua}>
-                            Cambiar Porcentaje Agua
-                        </Button>
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updateUbicacionPozo}>
-                            Cambiar Ubicacion
-                        </Button>
-                    </div>
-                    <div className="flex items-center mr-4">
-                        <Button color="blue" size="sm" onClick={updateComunidades}>
-                            Cambiar Comunidades
-                        </Button>
-                    </div>
-                    <div className="flex items-center">
-                        <Button color="blue" size="sm" onClick={updateEstatus}>
-                            Cambiar Estatus
-                        </Button>
-                    </div>
+                <div className="p-4">
+                  {/* Información del pozo */}
+                  <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Nombre Pozo:</span> {pozo && pozo.nombre}</p>
+                  <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Capacidad:</span> {pozo && pozo.capacidadLitros}</p>
+                  <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Porcentaje Agua:</span> {pozo && pozo.porcentajeAgua}</p>
+                  <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Ubicación:</span> {pozo && pozo.ubicacionPozo}</p>
+                  <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Comunidades:</span> {pozo && pozo.comunidades}</p>
+                  <p><span className="font-bold" style={{ color: '#1269BB' }}>Estatus:</span> {pozo && pozo.estatus}</p>
                 </div>
+              </div>
+              <div className="flex flex-col space-y-4">
+                {/* Campos de actualización */}
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Nuevo nombre"
+                    value={nuevoNombre}
+                    onChange={(e) => setNuevoNombre(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  />
+                  <Button color="blue" size="sm" onClick={updateNombre}>
+                    Cambiar Nombre
+                  </Button>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    placeholder="Nueva Capacidad Litros"
+                    value={nuevoCapacidadLitros}
+                    onChange={(e) => setNuevoCapacidadLitros(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  />
+                  <Button color="blue" size="sm" onClick={updateCapacidadLitros}>
+                    Cambiar Capacidad Litros
+                  </Button>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="number"
+                    placeholder="Nuevo Porcentaje Agua"
+                    value={nuevoPorcentajeAgua}
+                    onChange={(e) => setNuevoPorcentajeAgua(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  />
+                  <Button color="blue" size="sm" onClick={updatePorcentajeAgua}>
+                    Cambiar Porcentaje Agua
+                  </Button>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Nueva Ubicacion"
+                    value={nuevaUbicacionPozo}
+                    onChange={(e) => setNuevaUbicacionPozo(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  />
+                  <Button color="blue" size="sm" onClick={updateUbicacionPozo}>
+                    Cambiar Ubicacion
+                  </Button>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Nueva Comunidad"
+                    value={nuevaComunidades}
+                    onChange={(e) => setNuevaComunidades(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  />
+                  <Button color="blue" size="sm" onClick={updateComunidades}>
+                    Cambiar Comunidades
+                  </Button>
+                </div>
+                <div className="flex items-center">
+                  <select
+                    value={nuevoEstatus}
+                    onChange={(e) => setNuevoEstatus(e.target.value)}
+                    className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  >
+                    <option value="">Selecciona un estatus</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                  </select>
+                  <Button color="blue" size="sm" onClick={updateEstatus}>
+                    Cambiar Estatus
+                  </Button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      );
+      
 
-    );
+
+
+
+
 };
 
 export default ModificaPozo;
