@@ -1,26 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'flowbite-react';
-import './estilos/style.css';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Button } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const Pozos = () => {
-  const [pozos, setPozos] = useState([]);
+  const [pozo, setPozo] = useState(null);
 
   const getToken = () => {
-    console.log(localStorage.getItem("token"));
     return localStorage.getItem("token");
   };
 
   // Get de pozos
   const getPozos = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/pozos', {
+      const response = await axios.get("http://localhost:8080/api/pozos", {
         headers: {
-          Authorization: `Bearer ${getToken()}`
-        }
+          Authorization: `Bearer ${getToken()}`,
+        },
       });
-      setPozos(response.data);
+      console.log(response.data);
+      setPozo(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Actualizacion de pozo con put
+  const putPozo = async (id) => {
+    const token = getToken();
+    console.log(
+      "Actualizando pozo con capacidadlitros: ",
+      pozo[0].capacidadLitros
+    );
+    try {
+      console.log("Actualizando pozo con id: ", id);
+      console.log("Token: ", token);
+      const response = await fetch(`http://localhost:8080/api/pozos/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          capacidadLitros: pozo[0].capacidadLitros,
+          comunidades: pozo[0].comunidades,
+          nombre: pozo[0].nombre,
+          ubicacionPozo: pozo[0].ubicacionPozo,
+          porcentajeAgua: pozo.porcentajeAgua,
+          estatus: pozo.estatus,
+        }),
+      });
+      if (response.status === 200) {
+        window.location.href = "/pozos";
+      }
     } catch (error) {
       console.error(error);
     }
@@ -29,57 +61,54 @@ const Pozos = () => {
   useEffect(() => {
     getPozos();
   }, []);
+
   return (
     <div className="p-4 mx-auto mt-8 max-w-4xl">
       <table className="w-full border-collapse border border-gray-300 bg-white">
         <thead>
           <tr>
-            <th className='nombre'>Nombre</th>
-            <th className='capacidad'>Capacidad Litros</th>
-            <th className='porcentaje'>Porcentaje Agua</th>
-            <th className='ubicacion'>Ubicación</th>
-            <th className='comunidades'>Comunidades</th>
-            <th className='acciones'>Acciones</th>
+            <th className="nombre">Nombre</th>
+            <th className="capacidad">Capacidad Litros</th>
+            <th className="porcentaje">Porcentaje Agua</th>
+            <th className="ubicacion">Ubicación</th>
+            <th className="comunidades">Comunidades</th>
+            <th className="acciones">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(pozos) && pozos.map((pozo, index) => (
-            <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
-              <td className="border border-gray-300 px-4 py-2">
-                {pozo.nombre}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {pozo.capacidadLitros} L
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {pozo.porcentajeAgua} %
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {pozo.ubicacionPozo}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {pozo.comunidades}
-              </td>
-              <td className="border border-gray-300 px-4 py-1 flex justify-center items-center">
-                <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit">
-                  <Link to={`/consultapozo/${pozo.id}`}>Consultar</Link>
-                </Button>
+          {Array.isArray(pozo) &&
+            pozo.map((pozo) => (
+              <tr key={pozo.id}>
+                <td>{pozo.nombre}</td>
+                <td>{pozo.capacidadLitros} L</td>
+                <td>{pozo.porcentajeAgua} %</td>
+                <td>{pozo.ubicacionPozo}</td>
+                <td>{pozo.comunidades}</td>
+                <td>
+                  <Button
+                    style={{ background: "#5790AB" }}
+                    className="shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm"
+                    onClick={() => putPozo(pozo.id)}
+                  >
+                    Actualizar
+                  </Button>
                 <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit"
-                onClick={() => {
-                  localStorage.setItem("id", pozo.id);
-                }}>
-                  <Link to={`/modificapozo/${pozo.id}`}>Modificar</Link>
-                </Button>
-                <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm' type="submit">
-                  <Link to={`/eliminapozo/${pozo.id}`}>Eliminar</Link>
-                </Button>
-              </td>
-            </tr>
-          ))}
+                      onClick={() => {
+                        localStorage.setItem("id", pozo.id);
+                      }}
+                    >
+                      Modificar
+                    </Button>
+                  <Link to={`/eliminapozo/${pozo.id}`}>
+                    
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
 
 export default Pozos;
