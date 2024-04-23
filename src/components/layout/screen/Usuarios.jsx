@@ -1,17 +1,107 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "flowbite-react";
-import Imagen from "../../../assets/logo.png";
-import "./estilos/style.css";
 import { Link } from "react-router-dom";
+import "./estilos/style.css";
 
 const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [usuarios, setUsuarios] = useState([]);
+  const [rolesCount, setRolesCount] = useState({});
+  const [adminId, setAdminId] = useState([]);
+  const [clientId, setClientId] = useState([]);
+  const [userId, setUserId] = useState([]);
+  const [adminName, setAdminName] = useState([]);
+  const [clientName, setClientName] = useState([]);
+  const [userName, setUserName] = useState([]);
 
   //Obtenemos token:
   const getToken = () => {
     console.log(localStorage.getItem("token"));
     return localStorage.getItem("token");
+  };
+
+  //Obtenemos id de roles:
+  const getIdRolAdmin = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/ADMIN_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setAdminId(data.data.id);
+  };
+
+  const getIdRolClient = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/CLIENT_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setClientId(data.data.id);
+  };
+
+  const getIdRolUser = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/USER_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data.id);
+    setUserId(data.data.id);
+  };
+
+  const getNameAdmin = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/ADMIN_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    setAdminName(data.data.name); // Cambia setAdminId(data.data.id); por setAdminId(data.data.name);
+  };
+
+  const getNameClient = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/CLIENT_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data);
+    setClientName(data.data.name); // Cambia setClientId(data.data.id); por setClientId(data.data.name);
+  };
+
+  const getNameUser = async () => {
+    const token = getToken();
+    const response = await fetch("http://localhost:8080/api/role/USER_ROLE", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data.data);
+    setUserName(data.data.name); // Cambia setUserId(data.data.id); por setUserId(data.data.name);
   };
 
   //Obtenemos usuarios:
@@ -36,6 +126,22 @@ const Usuarios = () => {
   useEffect(() => {
     getUsuarios();
   }, []);
+
+  useEffect(() => {
+    // Realizar el conteo de roles por usuario
+    const countRoles = () => {
+      const count = usuarios.reduce((acc, usuario) => {
+        const roles = usuario.user.roles;
+        roles.forEach((role) => {
+          acc[role.name] = (acc[role.name] || 0) + 1;
+        });
+        return acc;
+      }, {});
+      setRolesCount(count);
+    };
+
+    countRoles();
+  }, [usuarios]);
 
   return (
     <div>
@@ -84,7 +190,9 @@ const Usuarios = () => {
                       {usuario.name} {usuario.surname} {usuario.lastname}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {usuario.user.roles[0].name}
+                      {usuario.user.roles.length > 0
+                        ? usuario.user.roles.map((role) => role.name).join(", ")
+                        : "Sin rol"}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       <td className="px-4 py-1 flex justify-between items-center">
@@ -104,8 +212,20 @@ const Usuarios = () => {
                           style={{ background: "#5790AB" }}
                           className="shadow btn-sm"
                           type="submit"
+                          disabled={
+                            usuario &&
+                            usuario.user &&
+                            usuario.user.roles &&
+                            usuario.user.roles.length > 0 &&
+                            rolesCount[usuario.user.roles[0].name] === 1 // Deshabilitar el botón si el count es 1
+                          }
+                          onClick={() => {
+                            localStorage.setItem("idAeliminar", usuario.id);
+                          }}
                         >
-                          <Link to="/eliminausuario">Eliminar</Link>
+                          <Link to={`/eliminausuario/${usuario.id}`}>
+                            Eliminar
+                          </Link>
                         </Button>
                       </td>
                     </td>
@@ -120,6 +240,23 @@ const Usuarios = () => {
             )}
           </tbody>
         </table>
+        <h2>Conteo de Roles:</h2>
+        <ul>
+          {Object.entries(rolesCount).map(([role, count]) => (
+            <li key={role}>
+              {role}: {count}
+              <ul>
+                {usuarios
+                  .filter((usuario) =>
+                    usuario.user.roles.some((r) => r.name === role)
+                  )
+                  .map((usuario) => (
+                    <li key={usuario.id}>{usuario.name}</li>
+                  ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
