@@ -33,15 +33,14 @@ const RegistrarPozo = () => {
   const postPozo = async (e) => {
     e.preventDefault();
     const token = getToken();
-    const nombre = document.getElementById("nombre").value;
-    const profundidad = document.getElementById("profundidad").value;
+    const nombre = document.getElementById("nombre").value
     const capacidadLitros = document.getElementById("capacidadLitros").value;
     const porcentajeAgua = document.getElementById("porcentajeAgua").value;
     const ubicacionPozo = document.getElementById("ubicacionPozo").value;
     const comunidades = document.getElementById("comunidades").value;
     const estatus = document.getElementById("estatus").value;
 
-    console.log("usuario:", nombre, profundidad, capacidadLitros, porcentajeAgua, ubicacionPozo, comunidades, estatus);
+    console.log("pozo:", nombre, capacidadLitros, porcentajeAgua, ubicacionPozo, comunidades, estatus);
 
     const response = await fetch("http://localhost:8080/api/pozos", {
       method: "POST",
@@ -51,7 +50,6 @@ const RegistrarPozo = () => {
       },
       body: JSON.stringify({
         nombre,
-        profundidad,
         capacidadLitros,
         porcentajeAgua,
         ubicacionPozo,
@@ -87,16 +85,10 @@ const RegistrarPozo = () => {
               <TextInput id="nombre" type="text" required />
             </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="profundidad" value="Profundidad" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
-              </div>
-              <TextInput id="profundidad" type="text" required />
-            </div>
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="profundidadPozo" value="Capacidad" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
+                <Label htmlFor="Capacidad" value="Capacidad" style={{ color: "#ffffff", fontSize: "1.1rem" }} />
               </div>
               <TextInput id="capacidadLitros" type="text" required />
             </div>
