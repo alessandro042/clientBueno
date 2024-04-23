@@ -92,13 +92,16 @@ const Pozos = () => {
                   >
                     Actualizar
                   </Button>
-                <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit"
+                  <Link to={`/modificapozo/${pozo.id}`}>
+                  <Button style={{ background: "#5790AB" }} className='shadow btn-sm w-auto h-auto px-1 py-0.5 text-sm mr-2' type="submit"
                       onClick={() => {
                         localStorage.setItem("id", pozo.id);
                       }}
                     >
                       Modificar
                     </Button>
+                  </Link>
+                
                   <Link to={`/eliminapozo/${pozo.id}`}>
                     
                   </Link>
