@@ -72,7 +72,7 @@ const RegistrarPozo = () => {
 
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row h-screen justify-center">
       <div style={{ background: "#072D44" }} className="lg:w-1/2 flex justify-center items-center bg-blue-900">
         <Card className="max-w-md border-none shadow-lg" style={{ background: "#064469" }}>
           <div className="font text-3xl font-bold mb-6">
@@ -139,6 +139,9 @@ const RegistrarPozo = () => {
           <span className='text-center text-2xl mt-10 tracking-wide font-medium'>Registra un nuevo pozo para <br /> comenzar a gestionar</span>
         </div>
       </div>
+      <Link to="/pozos" className="text-cyan-700 py-2 font-semibold text-sm px-4 border-none absolute top-4">
+                    Regresar
+                </Link>
     </div>
   );
 }

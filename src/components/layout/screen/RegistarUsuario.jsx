@@ -4,6 +4,7 @@ import Select from "react-select";
 import bcrypt from "bcryptjs";
 import Imagen from "../../../assets/logo.png";
 import { confirmAlert, customAlert } from '../../../config/alerts/alert';
+import { Link } from "react-router-dom";
 
 const RegistrarUsuario = () => {
   const [error, setError] = useState(null); // Nuevo estado para manejar errores
@@ -134,7 +135,7 @@ const RegistrarUsuario = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row h-screen justify-center">
       <div
         style={{ background: "#072D44" }}
         className="lg:w-1/2 flex justify-center items-center bg-blue-900"
@@ -221,6 +222,9 @@ const RegistrarUsuario = () => {
           </span>
         </div>
       </div>
+      <Link to="/usuarios" className="text-cyan-700 py-2 font-semibold text-sm px-4 border-none absolute top-4">
+                    Regresar
+                </Link>
     </div>
   );
 };

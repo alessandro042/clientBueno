@@ -240,23 +240,6 @@ const Usuarios = () => {
             )}
           </tbody>
         </table>
-        <h2>Conteo de Roles:</h2>
-        <ul>
-          {Object.entries(rolesCount).map(([role, count]) => (
-            <li key={role}>
-              {role}: {count}
-              <ul>
-                {usuarios
-                  .filter((usuario) =>
-                    usuario.user.roles.some((r) => r.name === role)
-                  )
-                  .map((usuario) => (
-                    <li key={usuario.id}>{usuario.name}</li>
-                  ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
