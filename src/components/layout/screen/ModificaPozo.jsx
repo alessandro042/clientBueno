@@ -324,6 +324,9 @@ const ModificaPozo = () => {
               </div>
             </div>
           </div>
+          <Link to="/pozos" className="text-cyan-700 py-2 font-semibold text-sm px-4 border-none absolute top-4">
+                    Regresar
+                </Link>
         </div>
       );
       

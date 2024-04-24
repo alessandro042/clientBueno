@@ -63,6 +63,7 @@ const ModificaUsuario = () => {
         birthdate: usuario.birthdate, // Incluir la fecha de nacimiento actual
         curp: usuario.curp,
         surname: usuario.surname,
+        lastname: usuario.lastname,
       }),
     });
     const data = await response.json();
@@ -170,6 +171,92 @@ const ModificaUsuario = () => {
   }
 
   return (
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="p-6 bg-white rounded-lg shadow-xl">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="rounded-lg overflow-hidden bg-white border border-gray-300 shadow-md">
+          <div className="p-4 border-b border-gray-300">
+            <h3 className="text-lg font-bold" style={{ color: '#06427C' }}>Información del Usuario</h3>
+          </div>
+          <div className="p-4">
+            {/* Información del user */}
+            <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Nombre(s):</span> {usuario.name}</p>
+            <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Apellido Paterno:</span> {usuario.lastname}</p>
+            <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Apellido Materno:</span> {usuario.surname}</p>
+            <p><span className="font-bold" style={{ color: '#1269BB' }}>Rol:</span>{usuario.user.roles[0].name}</p>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-4">
+          {/* Campos de actualización */}
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Nuevo nombre"
+              value={nuevoNombre}
+              onChange={(e) => setNuevoNombre(e.target.value)}
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            />
+            <Button color="blue" size="sm" onClick={cambiarNombre}>
+              Cambiar Nombre
+            </Button>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Nuevo apellido P"
+              value={nuevoApellidoP}
+              onChange={(e) => setNuevoApellidoP(e.target.value)}
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            />
+            <Button color="blue" size="sm" onClick={cambiarApellidoP}>
+              Cambiar Apellido Paterno
+            </Button>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Nuevo apellido M"
+              value={nuevoApellidoM}
+              onChange={(e) => setNuevoApellidoP(e.target.value)}
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            />
+            <Button color="blue" size="sm" onClick={cambiarApellidoM}>
+              Cambiar Apellido Materno
+            </Button>
+          </div>
+          <div className="flex items-center">
+            <select
+              value={nuevoRol}
+              onChange={(e) => setNuevoRol(e.target.value)}
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            >
+              <option value="">Selecciona un rol</option>
+              <option value="ADMIN_ROLE">Admin</option>
+              <option value="USER_ROLE">User</option>
+            </select>
+            <Button color="blue" size="sm" onClick={cambiarRol}>
+              Cambiar rol
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <Link to="/usuarios" className="text-cyan-700 py-2 font-semibold text-sm px-4 border-none absolute top-4">
+                    Regresar
+                </Link>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+    /*
     <div>
       <div className="p-4 mx-auto mt-8 max-w-4xl">
         <table className="w-full border-collapse border border-gray-300 bg-white">
@@ -258,7 +345,7 @@ const ModificaUsuario = () => {
       </div>
     </div>
 
-    /*
+    
     <div className="flex justify-center mt-4">
   <div className="flex items-center mr-4">
     <input
