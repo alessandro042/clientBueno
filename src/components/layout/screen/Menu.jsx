@@ -20,7 +20,7 @@ const Menu = () => {
           style={{ background: "#064469", padding: "40px", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}
         >
           <div className="font text-3xl font-bold mb-6 text-white">
-            Bienvenido Administrador
+            Bienvenido!
           </div>
           <div className="flex flex-col gap-7 items-center">
             <Link to="/usuarios">

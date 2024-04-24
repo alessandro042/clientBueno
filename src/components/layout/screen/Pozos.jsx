@@ -28,24 +28,25 @@ const Pozos = () => {
   // Actualizacion de pozo con put
   const putPozo = async (id) => {
     const token = getToken();
+    const array = id-1;
     console.log(
       "Actualizando pozo con capacidadlitros: ",
-      pozo[0].capacidadLitros
+      pozo[array].capacidadLitros
     );
     try {
-      console.log("Actualizando pozo con id: ", id);
+      console.log("Actualizando pozo con id: ", array);
       console.log("Token: ", token);
-      const response = await fetch(`http://localhost:8080/api/pozos/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/pozos/update/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          capacidadLitros: pozo[0].capacidadLitros,
-          comunidades: pozo[0].comunidades,
-          nombre: pozo[0].nombre,
-          ubicacionPozo: pozo[0].ubicacionPozo,
+          capacidadLitros: pozo[array].capacidadLitros,
+          comunidades: pozo[array].comunidades,
+          nombre: pozo[array].nombre,
+          ubicacionPozo: pozo[array].ubicacionPozo,
           porcentajeAgua: pozo.porcentajeAgua,
           estatus: pozo.estatus,
         }),

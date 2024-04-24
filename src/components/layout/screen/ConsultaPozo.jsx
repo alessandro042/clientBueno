@@ -39,9 +39,8 @@ const ConsultaPozos = () => {
       </div>
       
       <div className="flex justify-center mt-4">
-        <Button style={{ background: "#5790AB" }} className='shadow btn-sm mr-2'>Activar Llenado</Button>
         <Button style={{ background: "#5790AB" }} className='shadow btn-sm'>
-          <Link to="/histograma">
+          <Link to="/histogramauser">
             Mostrar Histograma
           </Link>
         </Button>

@@ -18,7 +18,7 @@ const AdminLayout = () => {
           <Navbar.Brand href="https://flowbite-react.com">
             <img src={Imagen} alt="Logo" className="h-12 w-auto mr-4" />
             <Link to="/">
-              <h1 className="text-white font-bold text-lg">SIMNA</h1>
+              <h1 className="text-white font-bold text-lg">SIMNA | ADMINISTRADOR</h1>
             </Link>
           </Navbar.Brand>
           <div className="flex md:order-2">
@@ -35,7 +35,7 @@ const AdminLayout = () => {
                 </button>
                 <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
                   <Link to='/usuarios'>Gestionar Usuarios</Link>
-                  </button>
+                </button>
                 <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
                   <Link to='/pozos'>Gestionar Pozos</Link>
                 </button>
@@ -46,7 +46,7 @@ const AdminLayout = () => {
                   <Link to='/registrarpozo'>Registrar Pozos</Link>
                 </button>
                 <button className="block w-full py-2 px-4 text-gray-800 hover:bg-gray-200" onClick={toggleMenu}>
-                  Cerrar Sesión
+                  Esconder
                 </button>
               </div>
             </div>
