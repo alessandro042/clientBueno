@@ -105,7 +105,6 @@ const Usuarios = () => {
   };
 
   //Obtenemos usuarios:
-  //Obtenemos usuarios:
   const getUsuarios = async () => {
     const token = getToken();
     const response = await fetch("http://localhost:8080/api/person/", {
@@ -121,7 +120,6 @@ const Usuarios = () => {
         usuario.user.roles.length > 0 &&
         usuario.user.roles[0].name === "CLIENT_ROLE"
       ) {
-        console.log("entro a cambiar rol:", usuario.user.roles[0].name);
         usuario.user.roles[0].name = "USER_ROLE";
       }
       return usuario;

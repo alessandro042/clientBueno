@@ -25,12 +25,18 @@ const EliminaUsuario = () => {
       },
     });
     const data = await response.json();
-    setRol(data.data.user.roles[0].name);
     setUsuario(data.data);
-  };
-
-  const getRoles = async () => {
-    return localStorage.getItem("user");
+    if (
+      data.data.user.roles.length > 0 &&
+      data.data.user.roles[0].name === "CLIENT_ROLE"
+    ) {
+      const updatedUser = { ...data.data };
+      updatedUser.user.roles[0].name = "USER_ROLE";
+      setUsuario(updatedUser);
+      console.log("Updated user", updatedUser);
+    } else {
+      setRol("Sin Rol Definido");
+    }
   };
 
   const deleteUsuario = async (id) => {
@@ -54,11 +60,9 @@ const EliminaUsuario = () => {
     }
   };
 
-
   useEffect(() => {
     const id = window.location.pathname.split("/")[2];
     getUsuario();
-    getRoles();
   }, []);
 
   return (
@@ -90,7 +94,9 @@ const EliminaUsuario = () => {
                 <span className="ml-2">{usuario?.surname}</span>
                 <span className="ml-2">{usuario?.lastname}</span>
               </td>
-              <td> {usuario?.user?.roles[0]?.name}</td>
+              <td> 
+                {usuario?.user?.roles[0]?.name === "USER_ROLE" ? "USER_ROLE" : "Cliente"}
+              </td>
               <td>
                 <div className="flex">
                   <Button
