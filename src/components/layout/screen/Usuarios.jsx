@@ -127,22 +127,6 @@ const Usuarios = () => {
     getUsuarios();
   }, []);
 
-  useEffect(() => {
-    // Realizar el conteo de roles por usuario
-    const countRoles = () => {
-      const count = usuarios.reduce((acc, usuario) => {
-        const roles = usuario.user.roles;
-        roles.forEach((role) => {
-          acc[role.name] = (acc[role.name] || 0) + 1;
-        });
-        return acc;
-      }, {});
-      setRolesCount(count);
-    };
-
-    countRoles();
-  }, [usuarios]);
-
   return (
     <div>
       <nav className="bg-white w-full p-4 flex justify-between items-center">
