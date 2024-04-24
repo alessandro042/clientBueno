@@ -3,6 +3,7 @@ import { Button } from 'flowbite-react';
 import Imagen from '../../../assets/logo.png';
 import './estilos/style.css';
 import { Link } from 'react-router-dom';
+import { confirmAlert, customAlert } from '../../../config/alerts/alert';
 
 const EliminaPozo = () => {
     const [pozo, setPozo] = useState({});
@@ -27,21 +28,29 @@ const EliminaPozo = () => {
         console.log(data);
         setPozo(data);
     };
-
+    
     const deletePozo = async () => {
-        const token = getToken();
-        const id = getIdPozo();
-        const response = await fetch(`http://localhost:8080/api/pozos/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
+        confirmAlert(async () => {
+            const token = getToken();
+            const id = getIdPozo();
+            try {
+                const response = await fetch(`http://localhost:8080/api/pozos/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const data = await response.json();
+                console.log(data);
+                setPozo(data);
+                customAlert("Error", "Error al eliminar Pozo", "error");
+            } catch (error) {
+                customAlert("Éxito", "Pozo eliminado exitosamente", "success");
+                setError("Pozo eliminado con éxito");
+            }
         });
-        const data = await response.json();
-        console.log(data);
-        setPozo(data);
-    };
+    }
 
     useEffect(() => {
         getPozo();
@@ -70,10 +79,10 @@ const EliminaPozo = () => {
                 </table>
                 <div className="flex justify-center mt-4">
                     <Button className="bg-blue-600 text-white px-4 py-2" style={{ backgroundColor: '#5790AB' }} onClick={deletePozo}>
-                        <Link to="/pozos">Eliminar</Link>
+                        Eliminar
                     </Button>
                     <Button className="bg-blue-600 text-white px-4 py-2 mx-2" style={{ backgroundColor: '#5790AB' }}>
-                        <Link to="/pozos">Cancelar</Link>
+                        <Link to="/pozos">Volver</Link>
                     </Button>
                 </div>
             </div>
