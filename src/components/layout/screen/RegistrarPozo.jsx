@@ -5,7 +5,7 @@ import Select from 'react-select';
 import Imagen from '../../../assets/logo.png'
 import * as yup from 'yup';
 import { confirmAlert, customAlert } from '../../../config/alerts/alert';
-
+import { Link } from 'react-router-dom';
 
 const RegistrarPozo = () => {
 

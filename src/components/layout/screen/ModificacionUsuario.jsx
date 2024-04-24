@@ -172,6 +172,13 @@ const ModificaUsuario = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
+      <nav className="flex absolute top-8 justify-center">
+          <div className="flex items-center justify-center absolute top-16">
+           <h2 className="font-bold" style={{ fontSize: '28px', color: '#072D44', padding:'10px' }}> Actualizar </h2>
+           <h2 className="font-bold" style={{ fontSize: '28px', color: 'blue' }}> </h2>
+           <h2 className="font-bold" style={{ fontSize: '28px', color: 'blue' }}> Usuario</h2>
+        </div>
+      </nav>
     <div className="p-6 bg-white rounded-lg shadow-xl">
       <div className="grid grid-cols-2 gap-4">
         <div className="rounded-lg overflow-hidden bg-white border border-gray-300 shadow-md">
@@ -222,20 +229,6 @@ const ModificaUsuario = () => {
             />
             <Button color="blue" size="sm" onClick={cambiarApellidoM}>
               Cambiar Apellido Materno
-            </Button>
-          </div>
-          <div className="flex items-center">
-            <select
-              value={nuevoRol}
-              onChange={(e) => setNuevoRol(e.target.value)}
-              className="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-            >
-              <option value="">Selecciona un rol</option>
-              <option value="ADMIN_ROLE">Admin</option>
-              <option value="USER_ROLE">User</option>
-            </select>
-            <Button color="blue" size="sm" onClick={cambiarRol}>
-              Cambiar rol
             </Button>
           </div>
         </div>
