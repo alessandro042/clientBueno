@@ -23,6 +23,7 @@ import MenuClient from "../../src/components/layout/screen/MenuClient";
 import Usuarios from "../../src/components/layout/screen/Usuarios";
 import Histograma from "../components/layout/screen/Histograma";
 import EliminaPozo from "../components/layout/screen/EliminaPozo";
+import NotFoundPage from "../components/layout/screen/NotFoundPage";
 import ModificaPozo from "../components/layout/screen/ModificaPozo";
 
 const AppRouter = () => {
@@ -74,20 +75,11 @@ const AppRouter = () => {
                 <Route path="/modificapozo/:id" element={<ModificaPozo />} />
               </Route>
             )}
-            {user.roles[0]?.name === "CLIENT_ROLE" && (
-              <Route element={<ClientLayout />}>
-                {vaidacionRole(['CLIENT_ROLE'])}
-                <Route path="/" element={<MenuClient />} />
-                <Route path="/consultapozo" element={<ConsultaPozo />} />
-                <Route path="/pozos" element={<PozosClient />} />
-                <Route path="/histograma" element={<Histograma />} />
-              </Route>
-            )}
           </>
         ) : (
           <Route path="/" element={<SignInPage />} />
         )}
-        <Route path="/*" element={<>404 not found</>} />
+        <Route path="/*" element={<NotFoundPage />} />
       </>
     )
   );
