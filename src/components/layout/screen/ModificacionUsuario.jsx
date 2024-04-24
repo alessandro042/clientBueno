@@ -190,7 +190,6 @@ const ModificaUsuario = () => {
             <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Nombre(s):</span> {usuario.name}</p>
             <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Apellido Paterno:</span> {usuario.lastname}</p>
             <p className="mb-4"><span className="font-bold" style={{ color: '#1269BB' }}>Apellido Materno:</span> {usuario.surname}</p>
-            <p><span className="font-bold" style={{ color: '#1269BB' }}>Rol:</span>{usuario.user.roles[0].name}</p>
           </div>
         </div>
         <div className="flex flex-col space-y-4">
