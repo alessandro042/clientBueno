@@ -4,7 +4,7 @@ import { Button, Card, Label, TextInput } from 'flowbite-react';
 import Select from 'react-select';
 import Imagen from '../../../assets/logo.png'
 import * as yup from 'yup';
-
+import { confirmAlert, customAlert } from '../../../config/alerts/alert';
 
 
 const RegistrarPozo = () => {
@@ -31,6 +31,7 @@ const RegistrarPozo = () => {
   };
 
   const postPozo = async (e) => {
+    
     e.preventDefault();
     const token = getToken();
     const nombre = document.getElementById("nombre").value
@@ -41,31 +42,31 @@ const RegistrarPozo = () => {
     const estatus = document.getElementById("estatus").value;
 
     console.log("pozo:", nombre, capacidadLitros, porcentajeAgua, ubicacionPozo, comunidades, estatus);
-
-    const response = await fetch("http://localhost:8080/api/pozos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        nombre,
-        capacidadLitros,
-        porcentajeAgua,
-        ubicacionPozo,
-        comunidades,
-        estatus
-
-      }),
-    });
-    if (response.status === 200) {
-      setError(null);
-      alert("Pozo registrado exitosamente");
-    } else {
+    confirmAlert(async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/pozos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nombre,
+          capacidadLitros,
+          porcentajeAgua,
+          ubicacionPozo,
+          comunidades,
+          estatus
+  
+        }),
+      });
+      customAlert("Éxito", "Pozo registrado exitosamente", "success");
+    } catch (error) {
+      customAlert("Error", "Error al registrar Pozo", "error");
       setError("Error al registrar Pozo");
     }
-  }
-
+  });
+}
 
 
 
