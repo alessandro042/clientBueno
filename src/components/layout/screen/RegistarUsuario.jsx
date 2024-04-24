@@ -3,6 +3,7 @@ import { Button, Card, Label, TextInput } from "flowbite-react";
 import Select from "react-select";
 import bcrypt from "bcryptjs";
 import Imagen from "../../../assets/logo.png";
+import { confirmAlert, customAlert } from '../../../config/alerts/alert';
 
 const RegistrarUsuario = () => {
   const [error, setError] = useState(null); // Nuevo estado para manejar errores
@@ -90,36 +91,40 @@ const RegistrarUsuario = () => {
     // Encriptar la contraseña antes de enviarla al backend
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const response = await fetch("http://localhost:8080/api/person/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name,
-        surname,
-        lastname,
-        birthdate,
-        curp,
-        user: {
-          username,
-          password: hashedPassword, // Enviar la contraseña encriptada
-          roles: [
-            {
-              id: rol_id,
-              name: rol,
+
+    confirmAlert(async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/person/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name,
+            surname,
+            lastname,
+            birthdate,
+            curp,
+            user: {
+              username,
+              password: hashedPassword, // Enviar la contraseña encriptada
+              roles: [
+                {
+                  id: rol_id,
+                  name: rol,
+                },
+              ],
             },
-          ],
-        },
-      }),
-    });
-    if (response.status === 200) {
-      setError(null);
-      alert("Usuario registrado exitosamente");
-    } else {
-      setError("Error al registrar usuario");
-    }
+          }),
+        });
+        customAlert("Éxito", "Usuario registrado exitosamente", "success");
+      } catch (error) {
+        customAlert("Error", "Error al registrar Usuario", "error");
+        setError("Error al registrar Usuario");
+      }
+  
+  });
   };
 
   useEffect(() => {
